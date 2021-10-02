@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  
+{% endblock %}
+
+
+{% block body %}
+<ul class="topnav">
+    <li><a class="name">MIA PRACTICA 1</a></li>
+    <li><a class="active" href="{{url_for('home')}}">Home</a></li>
+
+</ul>
+<h2>Bienvenido</h2>
+<div style="padding: 0 16px">
+    
+    <p>
+        BLOCKBUSTER
+    </p>
+    <p>Carlos Emilio Campos Moran - 201612332</p>
+</div>
+
+{% endblock %}

@@ -10,6 +10,13 @@
 
 </head>
 <body>
+    <ul class="topnav">
+        <li><a class="name">MIA PRACTICA 1</a></li>
+        <li><a class="active" href="{{url_for('home')}}">Home</a></li>
+        <li><a class="button1" href="{{url_for('loadcsv')}}">Cargar CSV</a></li>
+        <li><a class="button1" href="{{url_for('loadData')}}">Cargar CSV a Modelo</a></li>
+    
+    </ul>
     {% block body %}{% endblock %}
 </body>
 </html>

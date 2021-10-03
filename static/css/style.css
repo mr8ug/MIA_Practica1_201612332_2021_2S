@@ -36,15 +36,24 @@ ul.topnav li a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    
 }
 
 ul.topnav li a:hover:not(.active):not(.name) {
-    background-color: #111;
+    /*background-color: #111;*/
+    box-shadow: rgba(179, 76, 76, 0.3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
 }
 
 ul.topnav li a.active {
     background-color: #0483aa;
+    box-shadow: 0px 0px 0px 0px;
+    top: 5px;
+    left: 5px;
+
 }
+
+
 
 ul.topnav li a.name {
     background-color: aquamarine;
@@ -55,6 +64,9 @@ ul.topnav li a.name {
 ul.topnav li.right {
     float: right;
 }
+
+
+
 
 @media screen and (max-width: 600px) {
 
@@ -69,8 +81,8 @@ ul.topnav li.right {
 
 }
 
-@media (min-width: 768px) {
-    .button1 {
-      padding: 0.25em 0.75em;
-    }
-  }
+
+
+
+
+

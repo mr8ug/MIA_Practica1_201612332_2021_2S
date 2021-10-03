@@ -1,10 +1,8 @@
 
-from flask import Flask, jsonify, request, render_template, render_template_string
-from flask.templating import render_template_string
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 import psycopg2
-import os
-import json
+
 
 
 app = Flask(__name__, template_folder='templates')
@@ -17,6 +15,8 @@ DB_HOST = "localhost"
 DB_NAME = "practica1"
 DB_USER = "postgres"
 DB_PASS = "campos31"
+
+
 try:
     con = psycopg2.connect(
         dbname=DB_NAME,
@@ -25,60 +25,48 @@ try:
         host=DB_HOST)
 
     cur = con.cursor()
-
     print(con.status)
 
+#REALIZA LA CONSULTA Y RETORNA EL JSON
+    def consultar(script_name):
+        try:
+            with open("consultas/"+str(script_name)+".sql",encoding='utf-8') as f:
+                cur.execute(f.read())
+                rows = cur.fetchall()
+                resultados = jsonify(rows)                
+                
+                return resultados
+                #return render_template('resultado.html',resultado=resultados)
+        except Exception as err:
+            return "<h1>Error: {0} </h1>".format(err)
+
+#PAGINA INICIAL
     @app.route("/")
     def home():
-      # return "<h1 style='color:blue'>ESTAMOS EN EL LABORATORIO DE ARCHIVOS !</h1>"
         return render_template('home.html')
-# obtengo todos los registros de mi tabla movies que cree en mi BD
 
-    @app.route('/toda', methods=['GET'])
-    def fetch_all_movies():
-        try:
-            cur.execute('SELECT * FROM movies')
-            rows = cur.fetchall()
-            print(rows)
-
-            return jsonify(rows)
-        except Exception as err:
-            return "<h1>Error: {0} </h1>".format(err)
-
-
-# obtengo todos los registros de mi tabla movies que cree en mi BD
-
+#ENDPOINTS PARA CADA CONSULTA
     @app.route('/consulta1', methods=['GET'])
     def consulta1():
-        try:
-            with open('consultas/consulta1.sql',encoding='utf-8') as f:
-                cur.execute(f.read())
-                #cur.execute('SELECT * FROM movies')
-                rows = cur.fetchall()
-                # print(rows)
-                return jsonify(rows)
-        except Exception as err:
-            return "<h1>Error: {0} </h1>".format(err)
+        return consultar("consulta1")
 
     @app.route('/loadcsv', methods=['GET'])
     def loadcsv():
-        try:
-            with open('consultas/loadcsv.sql',encoding='utf-8') as f:
-                cur.execute(f.read())
-                #cur.execute('SELECT * FROM movies')
-                rows = cur.fetchall()
-                # print(rows)
-                
-                return jsonify(rows)
-                #return "<h1>CONSULTA 1</H1>"
-        except Exception as err:
-            return "<h1>Error: {0} </h1>".format(err)
+        return consultar("loadcsv")
 
-        
+    #movera de la tabla temporal a el respectivo modelo
+    @app.route('/loadData', methods=['GET'])
+    def loadData():
+        consultar("loadcsv")
+        return consultar("modelo")
 
+
+    
+#ARRANQUE DE APLICACION
     if __name__ == "__main__":
         app.run(host='0.0.0.0')
 
-
+    
+#MOSTRAR EL ERROR 
 except Exception as err:
     print('Error: {0} >'.format(err))

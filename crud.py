@@ -4,6 +4,7 @@ from flask.templating import render_template_string
 from flask_cors import CORS
 import psycopg2
 import os
+import json
 
 
 app = Flask(__name__, template_folder='templates')
@@ -49,14 +50,35 @@ try:
 
     @app.route('/consulta1', methods=['GET'])
     def consulta1():
-        #cur.execute('SELECT * FROM movies')
-        #rows = cur.fetchall()
-        # print(rows)
+        try:
+            with open('consultas/consulta1.sql',encoding='utf-8') as f:
+                cur.execute(f.read())
+                #cur.execute('SELECT * FROM movies')
+                rows = cur.fetchall()
+                # print(rows)
+                return jsonify(rows)
+        except Exception as err:
+            return "<h1>Error: {0} </h1>".format(err)
 
-        # return jsonify(rows)
-        return "<h1>CONSULTA 1</H1>"
+    @app.route('/loadcsv', methods=['GET'])
+    def loadcsv():
+        try:
+            with open('consultas/loadcsv.sql',encoding='utf-8') as f:
+                cur.execute(f.read())
+                #cur.execute('SELECT * FROM movies')
+                rows = cur.fetchall()
+                # print(rows)
+                
+                return jsonify(rows)
+                #return "<h1>CONSULTA 1</H1>"
+        except Exception as err:
+            return "<h1>Error: {0} </h1>".format(err)
+
+        
 
     if __name__ == "__main__":
         app.run(host='0.0.0.0')
+
+
 except Exception as err:
     print('Error: {0} >'.format(err))

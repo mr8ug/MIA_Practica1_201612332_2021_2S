@@ -1,4 +1,5 @@
 
+from types import ModuleType
 from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 import psycopg2
@@ -38,7 +39,10 @@ try:
                 return resultados
                 #return render_template('resultado.html',resultado=resultados)
         except Exception as err:
-            return "<h1>Error: {0} </h1>".format(err)
+            if str(err) =="no results to fetch":
+                return "<h1>INFORMACION CARGADA A MODELO</h1>"
+            else:
+                return "<h1>Error: {0} </h1>".format(err)
 
 #PAGINA INICIAL
     @app.route("/")
@@ -46,19 +50,24 @@ try:
         return render_template('home.html')
 
 #ENDPOINTS PARA CADA CONSULTA
+
+
+    @app.route('/cargarTemporal', methods=['GET'])
+    def cargarTemporal():
+        return consultar("cargarTemporal")
+
+    #movera de la tabla temporal a el respectivo modelo
+    @app.route('/cargarModelo', methods=['GET'])
+    def cargarModelo():
+        return consultar("cargarModelo")
+
     @app.route('/consulta1', methods=['GET'])
     def consulta1():
         return consultar("consulta1")
-
-    @app.route('/loadcsv', methods=['GET'])
-    def loadcsv():
-        return consultar("loadcsv")
-
-    #movera de la tabla temporal a el respectivo modelo
-    @app.route('/loadData', methods=['GET'])
-    def loadData():
-        consultar("loadcsv")
-        return consultar("modelo")
+        
+    @app.route('/consulta2', methods=['GET'])
+    def consulta2():
+        return consultar("consulta2")
 
 
     

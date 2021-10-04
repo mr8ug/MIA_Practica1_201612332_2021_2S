@@ -13,8 +13,10 @@
     <ul class="topnav">
         <li><a class="name">MIA PRACTICA 1</a></li>
         <li><a class="active" href="{{url_for('home')}}">Home</a></li>
-        <li><a class="button1" href="{{url_for('loadcsv')}}">Cargar CSV</a></li>
-        <li><a class="button1" href="{{url_for('loadData')}}">Cargar CSV a Modelo</a></li>
+        <li><a class="button1" href="{{url_for('cargarTemporal')}}">Cargar CSV</a></li>
+        <li><a class="button1" href="{{url_for('cargarModelo')}}">Cargar CSV a Modelo</a></li>
+        <li><a class="button1" href="{{url_for('consulta1')}}">CONSULTA #1</a></li>
+        <li><a class="button1" href="{{url_for('consulta2')}}">CONSULTA #2</a></li>
     
     </ul>
     {% block body %}{% endblock %}

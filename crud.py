@@ -64,11 +64,14 @@ try:
     @app.route('/consulta1', methods=['GET'])
     def consulta1():
         return consultar("consulta1")
-        
+
     @app.route('/consulta2', methods=['GET'])
     def consulta2():
         return consultar("consulta2")
 
+    @app.route('/consulta3', methods=['GET'])
+    def consulta3():
+        return consultar("consulta3")
 
     
 #ARRANQUE DE APLICACION

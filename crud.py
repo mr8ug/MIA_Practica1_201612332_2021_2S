@@ -42,8 +42,9 @@ try:
             if str(err) =="no results to fetch":
                 return "<h1>INFORMACION CARGADA A MODELO</h1>"
             else:
+                #consultar("rollback")
                 return "<h1>Error: {0} </h1>".format(err)
-
+                
 #PAGINA INICIAL
     @app.route("/")
     def home():
